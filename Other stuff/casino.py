@@ -2,6 +2,8 @@ import random
 import time
 from colorama import Fore
 import slots
+from options import display_it
+import random_game
 
 def clear_screen():
   print("\033c")
@@ -39,7 +41,7 @@ def play_select():
   print(Fore.CYAN + "What would you like to play")
   print()
   print("1. ",Fore.GREEN + "Slots [AVAILABLE]" + Fore.CYAN)
-  print("2. ",Fore.RED + "Random Guess [UNAVALIABLE]" + Fore.CYAN)
+  print("2. ",Fore.YELLOW + "Random Guess [UNDER CONSTRUCTION]" + Fore.CYAN)
   print("3. ",Fore.RED + "Blackjack [UNAVAILABLE]" + Fore.CYAN)
   print("4. ",Fore.WHITE + "Back" + Fore.CYAN)
 
@@ -64,8 +66,7 @@ def play_select():
 
 def options():
   clear_screen()
-
-  pass
+  display_it()
 
 def credits_():
   clear_screen()
@@ -76,6 +77,7 @@ def play_slots():
   pass
 
 def play_random():
+  random_game.run()
   pass
 
 def play_blackjack():

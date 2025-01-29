@@ -3,43 +3,38 @@ import time
 from colorama import Fore
 
 money = 5
-
 auto = True
-
-slot = ["🍇", "🍉", "🍊", "🍋", "🍍", "🍒", "7️⃣ ","⭐"]
 
 def clear_screen():
   print("\033c")
 
-def generate_3():
-  global the_slot
+def generate():
+  global the_slot, choice_of_num
   clear_screen()
-  slot1 = random.choice(slot)
-  slot2 = random.choice(slot)
-  slot3 = random.choice(slot)
-  the_slot = [slot1, slot2, slot3]
+  the_slot = random.randint(1,100)
   if money > 10:
     colour_credits = Fore.GREEN
   elif money > 5:
     colour_credits = Fore.YELLOW
   else:
     colour_credits = Fore.RED
-  print(Fore.CYAN + "**-- " + Fore.YELLOW + "Slots " + Fore.CYAN + "--**" + colour_credits + f"       Credits: {money}")
+  print(Fore.CYAN + "**-- " + Fore.YELLOW + "Random " + Fore.CYAN + "--**" + colour_credits + f"       Credits: {money}")
   print()
-  print("  ",*the_slot)
+  print("Your choice: ",choice_of_num)
+  print("Computer choice: ",the_slot)
 
 def cycle():
   cycle_time = 0.1
   for i in range (10):
-    generate_3()
+    generate()
     time.sleep(cycle_time)
     cycle_time -= 0.005
 
-def check_for_win():
+def check_for_win(num_choice):
   global the_slot, money
   print()
   
-  if the_slot[0] == the_slot[1] and the_slot[1] == the_slot[2]:
+  if the_slot == num_choice:
     print(Fore.GREEN + " 🎉 You win 🎉" + Fore.GREEN)
     money += 10
     time.sleep(5)
@@ -59,12 +54,15 @@ def top_up():
   money = money + top
 
 def run():
+  global choice_of_num
   clear_screen()
-  print("**-- Welcome to Slots --**")
+  print("**-- Welcome to Random Game --**")
   time.sleep(1)
   while True:
+    global auto
+    choice_of_num = int(input("Enter a number between [1 - 100] >> "))
     cycle()
-    check_for_win()
+    check_for_win(choice_of_num)
     print()
     
     if auto == False:
