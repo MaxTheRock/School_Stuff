@@ -20,8 +20,8 @@ def generate():
     colour_credits = Fore.RED
   print(Fore.CYAN + "**-- " + Fore.YELLOW + "Random " + Fore.CYAN + "--**" + colour_credits + f"       Credits: {money}")
   print()
-  print("Your choice: ",choice_of_num)
-  print("Computer choice: ",the_slot)
+  print(Fore.CYAN + "Your choice: ",choice_of_num)
+  print(Fore.BLUE + "Computer choice: ",the_slot)
 
 def cycle():
   cycle_time = 0.1
@@ -61,6 +61,8 @@ def run():
   while True:
     global auto
     choice_of_num = int(input("Enter a number between [1 - 100] >> "))
+    while choice_of_num > 100:
+      choice_of_num = int(input("Enter a number between [1 - 100] >> "))
     cycle()
     check_for_win(choice_of_num)
     print()
