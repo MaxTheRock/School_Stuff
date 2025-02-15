@@ -1,15 +1,5 @@
-a = 0
-b = 4
-c = 2 
-
-while a < 3:
-  a = a + 1 
-  print("A: ",a)
-  while b > 0:
-    b = b - 1 
-    print("B: ",b)
-    c = c - a + b
-    print("C: ",c)
-
-
-print(a, b, c) 
+first_name = "Maximilian"
+middle_name = " "
+last_name = "Misiurski"
+full_name = first_name + middle_name + last_name
+print(full_name)
