@@ -38,8 +38,10 @@ while credits != 0:
   slot2 = random.choice(symbols)
   slot3 = random.choice(symbols)
   
-  print("")
-  print(f"      {slot1} {slot2} {slot3}")
+  print("🟨🟥🟨🟥🟨🟥🟨🟥🟨🟥🟨")
+  print(f"🟥     {slot1} {slot2} {slot3}     🟥")
+  print("🟨                  🟨")
+  print("🟥                  🟥")
   
   
   if (slot1 == "💣") and (slot2== "💣") and (slot3=="💣"):
@@ -60,21 +62,52 @@ while credits != 0:
     print("🔥  CREDIT SKULL  🔥")
     print("❌    - 5000      ❌")
     time.sleep(3)
+  elif (slot1 in ["💣", "💀", "❌"]) and (slot2 in ["💣", "💀", "❌"]) and (slot3 in ["💣", "💀", "❌"]):
+    credits = credits - 50
+    print("")
+    print("❌     OH NO...   ❌")
+    print("💣     - 50       💀")
+    time.sleep(3)
   elif (slot1 == slot2) and (slot2 == slot3):
-    credits = credits + 1000
+    credits = credits + 500
     print("")
     print("🎰 CREDIT JACKPOT 🎰")
-    print("🎰     + 1000     🎰")
+    print("🎰     + 500      🎰")
     time.sleep(3)
   elif colour_check(slot1,slot2,slot3):
-    credits = credits + 20
+    clear()
+    print("🟨🟥🟨🟥🟨🟥🟨🟥🟨🟥")
+    print(f"      {slot1} {slot2} {slot3}")
     print("🎰 COLOUR JACKPOT 🎰")
-    print("🎰     + 20       🎰")
+    print("🎰     + 10       🎰")
+    print("      Credits: ")
+    print(f"      {credits}")
+    time.sleep(2)
+    credits = credits + 10
+    clear()
+    print("")
+    print(f"      {slot1} {slot2} {slot3}")
+    print("🎰 COLOUR JACKPOT 🎰")
+    print("🎰     + 10       🎰")
+    print("      Credits: ")
+    print(f"      {credits}")
+    
+    time.sleep(1)
+  elif ((slot1 == "💀") or (slot1 == "❌") or (slot1 == "🥥")) and ((slot2 == "💀") or (slot2 == "❌") or (slot2 == "🥥")) and ((slot3 == "💀") or (slot3 == "❌") or (slot3 == "🥥")):
+    credits = credits + 250
+    print("🎰 PIRATE JACKPOT 🎰")
+    print("🦴     + 250      🦴")
     time.sleep(3)
   else:
-    credits = credits - 1
-  print("    Credits left")
-  print(f"    {credits}")
+    credits -= 1
+    space = 8 - len(str(credits))
+    spaces = ""
+    for _ in range(space):
+      spaces += " "
+    
+    print("🟨     Credits:     🟨")
+    print(f"🟥     {credits}{spaces}     🟥")
+    print("🟨🟥🟨🟥🟨🟥🟨🟥🟨🟥🟨")
   time.sleep(0.5)
 
 print("No credits left :(")
