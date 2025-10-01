@@ -1,114 +1,100 @@
 import random
 import time
 import math
+from typing import List, Dict
 
-symbols = [
-  "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎", "🍏", "🍐", "🍑", "🍒", "🍓", "🫐", "🥝", "🍅", "🥥",
-  "💣", "💀", "❌"
+SYMBOLS = [
+    "🍇", "🍈", "🍉",
+    "🍊", "🍋", "🍌",
+    "🍍", "🥭", "🍎",
+    "🍏", "🍐", "🍑",
+    "🍒", "🍓", "🫐",
+    "🥝", "🍅", "🥥",
+    "💣", "💀", "❌",
 ]
+
+# Color groups for checking matches
+COLORS: Dict[str, List[str]] = {
+    "red": ["🍉", "🍎", "🍒", "🍓", "🍅", "❌"],
+    "orange": ["🍊", "🍍", "🥭", "🍑"],
+    "yellow": ["🍋", "🍌"],
+    "green": ["🍈", "🍏", "🍐", "🥝"],
+    "purple": ["🍇", "🫐", "💣"],
+}
+
+SPECIAL_SYMBOLS = ["💣", "💀", "❌"]
+PIRATE_SYMBOLS = ["💀", "❌", "🥥"]
 
 credits = int(input("Enter credits: "))
 
-def colour_check(s1, s2, s3):
-  r_s = ["🍉", "🍎", "🍒", "🍓", "🍅", "❌"]
-  o_s = ["🍊", "🍍", "🥭", "🍑"]
-  y_s = ["🍋", "🍌", "🌽"]
-  g_s = ["🍈", "🍏", "🍐", "🥝"]
-  p_s = ["🍇", "🫐", "💣"]
 
-  if (s1 in r_s) and (s2 in r_s) and (s3 in r_s):
-    return True
-  elif (s1 in o_s) and (s2 in o_s) and (s3 in o_s):
-    return True
-  elif (s1 in y_s) and (s2 in y_s) and (s3 in y_s):
-    return True
-  elif (s1 in g_s) and (s2 in g_s) and (s3 in g_s):
-    return True
-  elif (s1 in p_s) and (s2 in p_s) and (s3 in p_s):
-    return True
-  else:
+def colour_check(s1: str, s2: str, s3: str) -> bool:
+    for color_group in COLORS.values():
+        if s1 in color_group and s2 in color_group and s3 in color_group:
+            return True
     return False
 
-def clear():
-  print("\033c", end="")
 
-while credits != 0:
-  clear()
-  slot1 = random.choice(symbols)
-  slot2 = random.choice(symbols)
-  slot3 = random.choice(symbols)
-  
-  print("🟨🟥🟨🟥🟨🟥🟨🟥🟨🟥🟨")
-  print(f"🟥     {slot1} {slot2} {slot3}     🟥")
-  print("🟨                  🟨")
-  print("🟥                  🟥")
-  
-  
-  if (slot1 == "💣") and (slot2== "💣") and (slot3=="💣"):
-    credits = credits - (math.ceil(credits/2))
-    print("")
-    print("🔥  CREDIT BOMB   🔥")
-    print("💣      ÷ 2      💣")
-    time.sleep(3)
-  elif (slot1 == "💀") and (slot2== "💀") and (slot3=="💀"):
-    credits = credits - 667
-    print("")
-    print("🔥  CREDIT SKULL  🔥")
-    print("💀     - 667      💀")
-    time.sleep(3)
-  elif (slot1 == "❌") and (slot2== "❌") and (slot3=="❌"):
-    credits = credits - 5000
-    print("")
-    print("🔥  CREDIT SKULL  🔥")
-    print("❌    - 5000      ❌")
-    time.sleep(3)
-  elif (slot1 in ["💣", "💀", "❌"]) and (slot2 in ["💣", "💀", "❌"]) and (slot3 in ["💣", "💀", "❌"]):
-    credits = credits - 50
-    print("")
-    print("❌     OH NO...   ❌")
-    print("💣     - 50       💀")
-    time.sleep(3)
-  elif (slot1 == slot2) and (slot2 == slot3):
-    credits = credits + 500
-    print("")
-    print("🎰 CREDIT JACKPOT 🎰")
-    print("🎰     + 500      🎰")
-    time.sleep(3)
-  elif colour_check(slot1,slot2,slot3):
+def clear() -> None:
+    print("\033c", end="")
+
+
+while credits > 0:
     clear()
-    print("🟨🟥🟨🟥🟨🟥🟨🟥🟨🟥")
-    print(f"      {slot1} {slot2} {slot3}")
-    print("🎰 COLOUR JACKPOT 🎰")
-    print("🎰     + 10       🎰")
-    print("      Credits: ")
-    print(f"      {credits}")
-    time.sleep(2)
-    credits = credits + 10
-    clear()
-    print("")
-    print(f"      {slot1} {slot2} {slot3}")
-    print("🎰 COLOUR JACKPOT 🎰")
-    print("🎰     + 10       🎰")
-    print("      Credits: ")
-    print(f"      {credits}")
+    slot1, slot2, slot3 = [random.choice(SYMBOLS) for _ in range(3)]
+    jackpot_type = "🟥                  🟥"
+    mult_type = "🟥                  🟥"
+
+    # Check for special combinations
+    if slot1 == slot2 == slot3 == "💣":
+        credits -= math.ceil(credits / 2)
+        jackpot_type = "🔥   CREDIT BOMB    🔥"
+        mult_type = "💣       ÷ 2       💣"
+    elif slot1 == slot2 == slot3 == "💀":
+        credits -= 667
+        jackpot_type = "🔥   CREDIT SKULL   🔥"
+        mult_type = "💀      - 667       💀"
+    elif slot1 == slot2 == slot3 == "❌":
+        credits -= 5000
+        jackpot_type = "🔥   CREDIT X   🔥"
+        mult_type = "❌     - 5000       ❌"
+    elif all(s in SPECIAL_SYMBOLS for s in [slot1, slot2, slot3]):
+        credits -= 50
+        jackpot_type = "❌      OH NO...    ❌"
+        mult_type = "💣      - 50       💀"
+    elif slot1 == slot2 == slot3:
+        credits += 500
+        jackpot_type = "🎰  CREDIT JACKPOT  🎰"
+        mult_type = "🎰      + 500       🎰"
+    elif colour_check(slot1, slot2, slot3):
+        credits += 10
+        jackpot_type = "🎰  COLOUR JACKPOT  🎰"
+        mult_type = "🎰      + 10        🎰"
+    elif all(s in PIRATE_SYMBOLS for s in [slot1, slot2, slot3]):
+        credits += 250
+        jackpot_type = "🎰  PIRATE JACKPOT  🎰"
+        mult_type = "🦴      + 250       🦴"
     
-    time.sleep(1)
-  elif ((slot1 == "💀") or (slot1 == "❌") or (slot1 == "🥥")) and ((slot2 == "💀") or (slot2 == "❌") or (slot2 == "🥥")) and ((slot3 == "💀") or (slot3 == "❌") or (slot3 == "🥥")):
-    credits = credits + 250
-    print("🎰 PIRATE JACKPOT 🎰")
-    print("🦴     + 250      🦴")
-    time.sleep(3)
-  else:
     credits -= 1
-    space = 8 - len(str(credits))
-    spaces = ""
-    for _ in range(space):
-      spaces += " "
-    
-    print("🟨     Credits:     🟨")
-    print(f"🟥     {credits}{spaces}     🟥")
+    credit_str = str(credits)
+    total_width = 18
+    pad = total_width - len(credit_str)
+    left = pad // 2
+    right = pad - left
+    spaces_left = " " * left
+    spaces_right = " " * right
+        
     print("🟨🟥🟨🟥🟨🟥🟨🟥🟨🟥🟨")
-  time.sleep(0.5)
+    print(f"{jackpot_type}")
+    print(f"🟨     {slot1} {slot2} {slot3}     🟨")
+    print(f"{mult_type}")
+    print(
+            f"🟨     Credits:     🟨\n🟥{spaces_left}{credit_str}{spaces_right}🟥\n🟨🟥🟨🟥🟨🟥🟨🟥🟨🟥🟨"
+        )
+    if jackpot_type != "🟥                  🟥":
+      time.sleep(3)
+    else:
+      time.sleep(0.3)
 
 print("No credits left :(")
-time.sleep(99)
+while True: continue
