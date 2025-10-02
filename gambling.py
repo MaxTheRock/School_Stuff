@@ -3,6 +3,9 @@ import time
 import math
 from typing import List, Dict
 
+rs = "🟥"
+ys = "🟨"
+
 SYMBOLS = [
     "🍇", "🍈", "🍉",
     "🍊", "🍋", "🍌",
@@ -42,8 +45,8 @@ def clear() -> None:
 while credits > 0:
     clear()
     slot1, slot2, slot3 = [random.choice(SYMBOLS) for _ in range(3)]
-    jackpot_type = "🟥                  🟥"
-    mult_type = "🟥                  🟥"
+    jackpot_type = f"{rs}                  {rs}"
+    mult_type = f"{rs}                  {rs}"
 
     # Check for special combinations
     if slot1 == slot2 == slot3 == "💣":
@@ -84,17 +87,19 @@ while credits > 0:
     spaces_left = " " * left
     spaces_right = " " * right
         
-    print("🟨🟥🟨🟥🟨🟥🟨🟥🟨🟥🟨")
+    print(f"{ys}{rs}{ys}{rs}{ys}{rs}{ys}{rs}{ys}{rs}{ys}")
     print(f"{jackpot_type}")
-    print(f"🟨     {slot1} {slot2} {slot3}     🟨")
+    print(f"{ys}     {slot1} {slot2} {slot3}     {ys}")
     print(f"{mult_type}")
     print(
-            f"🟨     Credits:     🟨\n🟥{spaces_left}{credit_str}{spaces_right}🟥\n🟨🟥🟨🟥🟨🟥🟨🟥🟨🟥🟨"
+            f"{ys}     Credits:     {ys}\n{rs}{spaces_left}{credit_str}{spaces_right}{rs}\n{ys}{rs}{ys}{rs}{ys}{rs}{ys}{rs}{ys}{rs}{ys}"
         )
-    if jackpot_type != "🟥                  🟥":
-      time.sleep(3)
+    if jackpot_type != "{rs}                  {rs}":
+      time.sleep(0.3)
     else:
       time.sleep(0.3)
+    
+    ys,rs = rs,ys
 
 print("No credits left :(")
 while True: continue
