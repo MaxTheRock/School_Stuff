@@ -51,32 +51,32 @@ while credits > 0:
     # Check for special combinations
     if slot1 == slot2 == slot3 == "💣":
         credits -= math.ceil(credits / 2)
-        jackpot_type = "🔥   CREDIT BOMB    🔥"
-        mult_type = "💣       ÷ 2       💣"
+        jackpot_type = f"{rs}   CREDIT BOMB    {rs}"
+        mult_type = f"{rs}💣     ÷ 2     💣{rs}"
     elif slot1 == slot2 == slot3 == "💀":
         credits -= 667
-        jackpot_type = "🔥   CREDIT SKULL   🔥"
-        mult_type = "💀      - 667       💀"
+        jackpot_type = f"{rs}   CREDIT SKULL   {rs}"
+        mult_type = f"{rs}💀    - 667     💀{rs}"
     elif slot1 == slot2 == slot3 == "❌":
-        credits -= 5000
-        jackpot_type = "🔥   CREDIT X   🔥"
-        mult_type = "❌     - 5000       ❌"
+        credits -= 2000
+        jackpot_type = f"{rs}     CREDIT X     {rs}"
+        mult_type = f"{rs}❌   - 2000     ❌{rs}"
     elif all(s in SPECIAL_SYMBOLS for s in [slot1, slot2, slot3]):
         credits -= 50
-        jackpot_type = "❌      OH NO...    ❌"
-        mult_type = "💣      - 50       💀"
+        jackpot_type = f"{rs}      OH NO...    {rs}"
+        mult_type = f"{rs}💣    - 50     💀{rs}"
     elif slot1 == slot2 == slot3:
         credits += 500
-        jackpot_type = "🎰  CREDIT JACKPOT  🎰"
-        mult_type = "🎰      + 500       🎰"
+        jackpot_type = f"{rs}  CREDIT JACKPOT  {rs}"
+        mult_type = f"{rs}🎰    + 500     🎰{rs}"
     elif colour_check(slot1, slot2, slot3):
         credits += 10
-        jackpot_type = "🎰  COLOUR JACKPOT  🎰"
-        mult_type = "🎰      + 10        🎰"
+        jackpot_type = f"{rs}  COLOUR JACKPOT  {rs}"
+        mult_type = f"{rs}🎰    + 10      🎰{rs}"
     elif all(s in PIRATE_SYMBOLS for s in [slot1, slot2, slot3]):
         credits += 250
-        jackpot_type = "🎰  PIRATE JACKPOT  🎰"
-        mult_type = "🦴      + 250       🦴"
+        jackpot_type = f"{rs}  PIRATE JACKPOT  {rs}"
+        mult_type = f"{rs}🦴    + 250     🦴{rs}"
     
     credits -= 1
     credit_str = str(credits)
@@ -94,8 +94,8 @@ while credits > 0:
     print(
             f"{ys}     Credits:     {ys}\n{rs}{spaces_left}{credit_str}{spaces_right}{rs}\n{ys}{rs}{ys}{rs}{ys}{rs}{ys}{rs}{ys}{rs}{ys}"
         )
-    if jackpot_type != "{rs}                  {rs}":
-      time.sleep(0.3)
+    if jackpot_type != f"{rs}                  {rs}":
+      time.sleep(3)
     else:
       time.sleep(0.3)
     
