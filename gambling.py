@@ -14,6 +14,8 @@ SYMBOLS = [
     "🍒", "🍓", "🫐",
     "🥝", "🍅", "🥥",
     "💣", "💀", "❌",
+    "🤖", "🤓", "🖥️",
+    "🖱️", "⌨️",
 ]
 
 # Color groups for checking matches
@@ -27,6 +29,8 @@ COLORS: Dict[str, List[str]] = {
 
 SPECIAL_SYMBOLS = ["💣", "💀", "❌"]
 PIRATE_SYMBOLS = ["💀", "❌", "🥥"]
+KAIDEN_SYMBOLS = ["🤖", "🤓", "🖥️"]
+COMPUTER_SYMBOLS = ["🖥️", "🖱️", "⌨️"]
 
 credits = int(input("Enter credits: "))
 
@@ -64,7 +68,7 @@ while credits > 0:
     elif all(s in SPECIAL_SYMBOLS for s in [slot1, slot2, slot3]):
         credits -= 50
         jackpot_type = f"{rs}      OH NO...    {rs}"
-        mult_type = f"{rs}💣    - 50     💀{rs}"
+        mult_type = f"{rs}💣    - 50      💀{rs}"
     elif slot1 == slot2 == slot3:
         credits += 500
         jackpot_type = f"{rs}  CREDIT JACKPOT  {rs}"
@@ -77,6 +81,14 @@ while credits > 0:
         credits += 250
         jackpot_type = f"{rs}  PIRATE JACKPOT  {rs}"
         mult_type = f"{rs}🦴    + 250     🦴{rs}"
+    elif all(s in KAIDEN_SYMBOLS for s in [slot1, slot2, slot3]):
+        credits += 250
+        jackpot_type = f"{rs}  KAIDEN JACKPOT  {rs}"
+        mult_type = f"{rs}🤖    + 250     🤖{rs}"
+    elif all(s in COMPUTER_SYMBOLS for s in [slot1, slot2, slot3]):
+        credits += 250
+        jackpot_type = f"{rs} COMPUTER JACKPOT {rs}"
+        mult_type = f"{rs}🖱️    + 250     🖱️{rs}"
     
     credits -= 1
     credit_str = str(credits)
