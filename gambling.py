@@ -15,7 +15,7 @@ SYMBOLS = [
     "🥝", "🍅", "🥥",
     "💣", "💀", "❌",
     "🤖", "🤓", "🖥️",
-    "🖱️", "⌨️",
+    "🖱️", "⌨️", "👎"
 ]
 
 # Color groups for checking matches
@@ -31,8 +31,10 @@ SPECIAL_SYMBOLS = ["💣", "💀", "❌"]
 PIRATE_SYMBOLS = ["💀", "❌", "🥥"]
 KAIDEN_SYMBOLS = ["🤖", "🤓", "🖥️"]
 COMPUTER_SYMBOLS = ["🖥️", "🖱️", "⌨️"]
+JACK_SYMBOLS = ["📷", "🍊", "👦🏻"]
 
 credits = int(input("Enter credits: "))
+credit_save = credits
 
 
 def colour_check(s1: str, s2: str, s3: str) -> bool:
@@ -65,18 +67,14 @@ while credits > 0:
         credits -= 2000
         jackpot_type = f"{rs}     CREDIT X     {rs}"
         mult_type = f"{rs}❌   - 2000     ❌{rs}"
+    elif (slot1 == slot2 == slot3 == "👎") and (credits > credit_save):
+        credits = credit_save
+        jackpot_type = f"{rs}     RESET     {rs}"
+        mult_type = f"{rs}👎   - {credits - credit_save}     👎{rs}"
     elif all(s in SPECIAL_SYMBOLS for s in [slot1, slot2, slot3]):
         credits -= 50
         jackpot_type = f"{rs}      OH NO...    {rs}"
         mult_type = f"{rs}💣    - 50      💀{rs}"
-    elif slot1 == slot2 == slot3:
-        credits += 500
-        jackpot_type = f"{rs}  CREDIT JACKPOT  {rs}"
-        mult_type = f"{rs}🎰    + 500     🎰{rs}"
-    elif colour_check(slot1, slot2, slot3):
-        credits += 10
-        jackpot_type = f"{rs}  COLOUR JACKPOT  {rs}"
-        mult_type = f"{rs}🎰    + 10      🎰{rs}"
     elif all(s in PIRATE_SYMBOLS for s in [slot1, slot2, slot3]):
         credits += 250
         jackpot_type = f"{rs}  PIRATE JACKPOT  {rs}"
@@ -89,8 +87,21 @@ while credits > 0:
         credits += 250
         jackpot_type = f"{rs} COMPUTER JACKPOT {rs}"
         mult_type = f"{rs}🖱️    + 250     🖱️{rs}"
+    elif all(s in JACK_SYMBOLS for s in [slot1, slot2, slot3]):
+        credits += 100
+        jackpot_type = f"{rs}      \x1B[4mJACK\x1B[0mPOT     {rs}"
+        mult_type = f"{rs}👦🏻    + 100     👦🏻{rs}"
+    elif slot1 == slot2 == slot3:
+        credits += 500
+        jackpot_type = f"{rs}  CREDIT JACKPOT  {rs}"
+        mult_type = f"{rs}🎰    + 500     🎰{rs}"
+    elif colour_check(slot1, slot2, slot3):
+        credits += 10
+        jackpot_type = f"{rs}  COLOUR JACKPOT  {rs}"
+        mult_type = f"{rs}🎰    + 10      🎰{rs}"
     
-    credits -= 1
+    
+    credits -= 2
     credit_str = str(credits)
     total_width = 18
     pad = total_width - len(credit_str)
